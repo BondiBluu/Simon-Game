@@ -1,10 +1,15 @@
 //Variables
 var buttonColours = ["red", "blue", "green", "yellow"];
 var gamePattern = [];
+var userClickPattern = [];
 
 function playSound(color){
     var audio = new Audio("sounds/"+ color +".mp3");
     audio.play();
+}
+
+function animatePress(currentColour){
+    $("#" + currentColour).fadeIn(100).fadeOut(100).fadeIn(100);
 }
 
 
@@ -32,8 +37,15 @@ for(var i = 0; i < buttonColours.length; i++){
 );
 }
 
-$("#blue").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+//check if the button is clicked 
+$(".btn").click(function(){
+    //find the id of the button that was clicked and add it to the userClickPattern array
+    var userChosenColor = this.id;
+    userClickPattern.push(userChosenColor);
 
+    playSound(userChosenColor);
+    animatePress(userChosenColor);
+});
 
 
 
