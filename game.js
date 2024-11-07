@@ -19,6 +19,9 @@ function animatePress(currentColour){
 }
 
 function nextSequence(){
+    //reset the userClickPattern array
+    userClickPattern = [];
+
     //add a level
     level++;
     $("#level-title").text("Level " + level);
@@ -43,12 +46,13 @@ function checkAnswer(currentLevel){
                 nextSequence();
             }, 1000);
 
-            //reset the userClickPattern array
-            userClickPattern = [];
+            
         }
     } 
     else {
         playSound("wrong");
+
+        //make the body flash red
         $("body").addClass("game-over");
         setTimeout(function(){
         $("body").removeClass("game-over");
@@ -56,8 +60,17 @@ function checkAnswer(currentLevel){
 
         //prompting user to restart
         $("#level-title").text("Game Over, Press Any Key to Restart");
-    }
 
+        //reset the game
+        startOver();
+    }
+}
+
+//restart the game when any key is pressed
+function startOver(){
+    level = 0;
+    gamePattern = [];
+    gameStarted = false;
 }
 
 //light up the button when mouse is hovered over it
@@ -73,13 +86,11 @@ for(var i = 0; i < buttonColours.length; i++){
 }
 
 //start the game when 'a' is pressed
-$(document).keypress(function(event){
-    if(event.key === 'a' && !gameStarted){
+$(document).keypress(function(){
+    if(!gameStarted){
         gameStarted = true;
         $("#level-title").text("Level " + level);
         nextSequence();
-        //turn off the keypress event listener on the document
-        $(this).off("keypress");
     }
 });
 
