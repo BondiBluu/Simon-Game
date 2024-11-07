@@ -48,6 +48,11 @@ body {
 }
 
 .pressed {
-  box-shadow: 0 0 20px white;
-  background-color: grey;
+  box-shadow: 0 0 20px rgb(23, 33, 226);
+  background-color: rgb(0, 0, 0);
+}
+
+.hovered {
+  box-shadow: 0 0 20px gray;
+  background-color: white;
 }

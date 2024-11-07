@@ -9,7 +9,11 @@ function playSound(color){
 }
 
 function animatePress(currentColour){
-    $("#" + currentColour).fadeIn(100).fadeOut(100).fadeIn(100);
+    //anim the button that was clicked
+    $("#" + currentColour).fadeOut(100);
+    setTimeout(function(){
+        $("#" + currentColour).fadeIn(100);
+    }, 100);    
 }
 
 
@@ -25,14 +29,13 @@ function nextSequence(){
 }
 
 //light up the button when mouse is hovered over it
-
 for(var i = 0; i < buttonColours.length; i++){
     $("#" + buttonColours[i]).hover(
         function(){
-        $(this).addClass("pressed");
+        $(this).addClass("hovered");
     }, 
     function(){
-        $(this).removeClass("pressed");
+        $(this).removeClass("hovered");
     }
 );
 }
