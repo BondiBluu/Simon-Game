@@ -22,7 +22,7 @@ function nextSequence(){
     //add a level
     level++;
     $("#level-title").text("Level " + level);
-    
+
     //make a random number between 0 and 3, choosing said color, and adding it to the gamePattern array
     var randomNumber = Math.floor(Math.random() * 4);
     var randomChosenColor = buttonColours[randomNumber];
@@ -31,6 +31,33 @@ function nextSequence(){
 
     $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColor);
+}
+
+function checkAnswer(currentLevel){
+    //checking if the most recent user answer is the same as the game pattern
+    if(userClickPattern[currentLevel] === gamePattern[currentLevel]){
+        //check that player has finished their sequence
+        if(userClickPattern.length === gamePattern.length){
+            //call nextSequence() after a 1000 millisecond delay.
+            setTimeout(function(){
+                nextSequence();
+            }, 1000);
+
+            //reset the userClickPattern array
+            userClickPattern = [];
+        }
+    } 
+    else {
+        playSound("wrong");
+        $("body").addClass("game-over");
+        setTimeout(function(){
+        $("body").removeClass("game-over");
+        }, 200);
+
+        //prompting user to restart
+        $("#level-title").text("Game Over, Press Any Key to Restart");
+    }
+
 }
 
 //light up the button when mouse is hovered over it
@@ -61,9 +88,11 @@ $(".btn").click(function(){
     //find the id of the button that was clicked and add it to the userClickPattern array
     var userChosenColor = this.id;
     userClickPattern.push(userChosenColor);
-
-    playSound(userChosenColor);
+ 
     animatePress(userChosenColor);
+    playSound(userChosenColor);
+
+    checkAnswer(userClickPattern.length - 1);
 });
 
 
