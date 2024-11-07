@@ -2,7 +2,8 @@
 var buttonColours = ["red", "blue", "green", "yellow"];
 var gamePattern = [];
 var userClickPattern = [];
-level = 0;
+var level = 0;
+var gameStarted = false;
 
 function playSound(color){
     var audio = new Audio("sounds/"+ color +".mp3");
@@ -42,9 +43,12 @@ for(var i = 0; i < buttonColours.length; i++){
 
 //start the game when 'a' is pressed
 $(document).keypress(function(event){
-    if(event.key === 'a'){
+    if(event.key === 'a' && !gameStarted){
+        gameStarted = true;
         $("#level-title").text("Level " + level);
         nextSequence();
+        //turn off the keypress event listener on the document
+        $(this).off("keypress");
     }
 });
 
