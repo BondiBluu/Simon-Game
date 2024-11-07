@@ -19,6 +19,10 @@ function animatePress(currentColour){
 }
 
 function nextSequence(){
+    //add a level
+    level++;
+    $("#level-title").text("Level " + level);
+    
     //make a random number between 0 and 3, choosing said color, and adding it to the gamePattern array
     var randomNumber = Math.floor(Math.random() * 4);
     var randomChosenColor = buttonColours[randomNumber];
